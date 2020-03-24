@@ -1,0 +1,74 @@
+﻿@model DAL.Models.Post
+
+@using System.Security.Claims;
+
+@{
+    ViewBag.Title = "News Post";
+}
+
+<br />
+<div class="container">
+    <div style="width: 80%">
+        <h3>@Model.Title</h3>
+        @if (!ViewBag.isAnonymous)
+        {
+            <i class="subHeader">Author: <a href="/Home/Author/@Model.AuthorId">@ViewBag.AuthorEmail</a></i>
+        }
+        <i class="subHeader">Category: 
+            @foreach (var cat in ViewBag.Categories) {
+                if(cat.Id == Model.CategoryId)
+                {
+                    <a href="/Home/Category/@cat.Id">@cat.Name</a>
+                }
+            }
+        </i>
+        <i class="subHeader">
+            Date added: @Model.DateCreated.Day/@Model.DateCreated.Month/@Model.DateCreated.Year
+        </i>
+    </div>
+    
+    <center>
+        <br /><br />
+        <img src="/Picture/Post/@Model.Id" alt="News picture" style="width: 80%" />
+        <br /><br />
+
+        <article style="width: 80%; text-align: left; line-height: 2.5; word-spacing: 10px; font-size: 18px;">
+            @Model.Article
+        </article>
+        <br />
+        @if (User.Identity.IsAuthenticated && ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Admin")
+        {
+            if (Model.isActive)
+            {
+                // deactivate
+                <button class="btn btn-danger" onclick="deactivate()">Deactivate</button>
+            }
+            else
+            {
+                // activate
+                <button class="btn btn-success" onclick="activate()">Activate</button>
+            }
+        }
+
+        @if (User.Identity.IsAuthenticated && ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Author")
+        {
+            <a href="/Post/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+            <a href="/Post/Delete/@Model.Id" class="btn btn-danger">Delete</a>
+        }
+        <br /><br />
+    </center>
+</div>
+
+<script>
+    function deactivate() {
+        if (confirm("Are you sure to Deactivate this post? It will not be displayed on home page!")) {
+            window.location = '/Admin/DeactivatePost/@Model.Id';
+        }
+    }
+
+    function activate() {
+        if (confirm("Are you sure to Activate this post? It will be displayed on home page!")) {
+            window.location = '/Admin/ActivatePost/@Model.Id';
+        }
+    }
+</script>

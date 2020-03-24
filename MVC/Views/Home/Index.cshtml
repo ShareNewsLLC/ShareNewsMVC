@@ -1,0 +1,45 @@
+﻿@model PagedList.IPagedList<DAL.Models.Post>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Home";
+    ViewBag.CurrentFilter = ViewBag.CurrentFilter;
+}
+<div class="container">
+    <center>
+        <ul class="categoryContainer">
+            <li><a href="#!">All Categories</a></li>
+            @foreach(var category in ViewBag.Categories)
+            {
+                <li><a href="/Home/category/@category.Id">@category.Name</a></li>
+            }
+        </ul>
+        <br />
+
+        <div class="row">
+            @foreach (var post in Model)
+            {
+                <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-12 cardConteiner">
+                    <a href="/Post/Details/@post.Id">
+                        <div class="cardBody">
+                            <div class="imgFrame" style="background-image: url('/Picture/Post/@post.Id')"></div>
+                            <div class="newsTitle">@post.Title</div>
+                            @foreach (var cat in ViewBag.Categories)
+                            {
+                                if(cat.Id == post.CategoryId)
+                                {
+                                    <div class="newsCategory">@cat.Name</div>
+                                }
+                            }
+                        </div>
+                    </a>                
+                </div>
+            }
+        </div>
+    </center>
+</div>
+<br />
+<div class="container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<br />

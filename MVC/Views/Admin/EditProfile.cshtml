@@ -1,0 +1,46 @@
+﻿@model DAL.Models.Admin
+
+@{
+    ViewBag.Title = "Edit Profile | Admin";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Admin">Posts</a></li>
+        <li><a class="nav-link" href="/Admin/Authors">Authors</a></li>
+        <li><a class="nav-link" href="/Admin/Categories">Categories</a></li>
+        <li><a class="nav-link active" href="/Admin/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal container" style="max-width:500px;">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-warning" />
+                <a href="/Admin/Profile" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </div>
+}

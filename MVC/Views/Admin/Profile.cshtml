@@ -1,0 +1,36 @@
+﻿@model DAL.Models.Admin
+
+@{
+    ViewBag.Title = "Profile | Admin";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Admin">Posts</a></li>
+        <li><a class="nav-link" href="/Admin/Authors">Authors</a></li>
+        <li><a class="nav-link" href="/Admin/Categories">Categories</a></li>
+        <li><a class="nav-link active" href="/Admin/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+<div class="container" style="max-width:500px;">
+    <br />
+    <dl class="dl-horizontal">
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Date Joined</dt>
+        <dd>@Model.DateJoined</dd>
+
+        <dt>Full Name</dt>
+        <dd>@Model.FullName</dd>
+    </dl>
+
+    <p>
+        <a href="/Admin/EditProfile" class="btn btn-warning">Edit profle</a>
+        <a href="/Admin/EditPassword" class="btn btn-warning">Change password</a>
+    </p>
+
+</div>
+

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Email";
+}
+<br />
+<center>
+    <h5>Please confirm  your e-mail.</h5>
+    <h5>6 digit e-mail confirmation code was sent to @ViewBag.Email</h5>
+    <h5>Did not get the code? <a href="/Author/ResendCode">Resend code</a></h5>
+    <br />
+    <form method="POST" class="container">
+        <input type="number" style="width: 200px" name="ConfirmationCode" placeholder="123456" class="form-control-lg" />
+        <br /><br />
+        <input type="submit" style="width: 200px" name="Submit" value="Verify" class="btn-lg btn-success" />
+        <br /><br />
+        <div>@ViewBag.Error</div>
+    </form>
+</center>
+

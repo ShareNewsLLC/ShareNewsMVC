@@ -1,0 +1,51 @@
+﻿@model List<DAL.Models.Post>
+@{
+    ViewBag.Title = "Author | Inactive posts";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Author">Active posts</a></li>
+        <li><a class="nav-link active" href="/Author/InactivePosts">Inactive posts</a></li>
+        <li><a class="nav-link" href="/Post/Create">Create post</a></li>
+        <li><a class="nav-link" href="/Author/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+
+<br />
+<table class="table table-striped container">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Date created</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var post in Model)
+        {
+            <tr>
+                <td><a target="_blank" href="/Post/Details/@post.Id">@post.Title</a></td>
+                <td>
+                    @foreach(var cat in ViewBag.Categories)
+                    {
+                        if(cat.Id == post.CategoryId)
+                        {
+                            <a target="_blank" href="/Home/Category/@cat.Id">@cat.Name</a>
+                        }
+                    }
+                </td>
+                <td>@post.DateCreated</td>
+                <td>@post.LastModified</td>
+                <td>
+                    <a href="/Post/Edit/@post.Id" class="btn btn-warning">Edit</a>
+                    <a href="/Post/Delete/@post.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />

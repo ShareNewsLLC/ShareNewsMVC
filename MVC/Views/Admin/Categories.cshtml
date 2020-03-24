@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DAL.Models.Category>
+
+@{
+    ViewBag.Title = "Categories | Admin";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Admin">Posts</a></li>
+        <li><a class="nav-link" href="/Admin/Authors">Authors</a></li>
+        <li><a class="nav-link active" href="/Admin/Categories">Categories</a></li>
+        <li><a class="nav-link" href="/Admin/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+<p class="container">
+    <a href="/Admin/CreateCategory" class="btn btn-secondary">Create category</a>
+</p>
+<table class="table table-striped container">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Change status</th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>
+            @if (item.isActive)
+            {
+                <button class="btn btn-danger" onclick="deActivate(@item.Id)">Deactivete</button>
+            }
+            else
+            {
+                <button class="btn btn-success" onclick="activate(@item.Id)">Activate</button>
+            }
+        </td>
+        <td>
+            <a href="/Admin/EditCategory/@item.Id" class="btn btn-warning">Edit</a>
+            <button onclick="deleteCategory(@item.Id)" class="btn btn-danger">Delete</button>
+        </td>
+    </tr>
+}
+</table>
+<br /><br />
+<script>
+    function deActivate(id) {
+        if (confirm("Category will not be shown to readers! Are you sure?")) {
+            window.location = '/Admin/DeactivateCategory/' + id;
+        }
+    }
+
+    function activate(id) {
+        if (confirm("Category will be shown to readers! Are you sure?")) {
+            window.location = '/Admin/ActivateCategory/' + id;
+        }
+    }
+
+    function deleteCategory(id) {
+        if (confirm("Category will be deleted! Are you sure?")) {
+            window.location = '/Admin/DeleteCategory/' + id;
+        }
+    }
+</script>

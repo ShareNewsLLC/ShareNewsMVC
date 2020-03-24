@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DAL.Models.Post>
+
+@{
+    ViewBag.Title = "Author View";
+}
+<br />
+<div class="container justify-content-center" style="max-width: 800px;">
+    <div class="bgg" style="background-image: url('/Picture/Author/@ViewBag.Author.Id');"></div>
+    <br />
+    <h4>@ViewBag.Author.FullName</h4>
+    <i class="subHeader">Email: <a href="mailto:@ViewBag.Author.Email">@ViewBag.Author.Email</a></i>
+    <i class="subHeader">Status: @(ViewBag.Author.isAnonymous ? "Anonymous" : "Public")</i>
+    <i class="subHeader">Date Joined: @ViewBag.Author.DateJoined.Day/@ViewBag.Author.DateJoined.Month/@ViewBag.Author.DateJoined.Year </i>
+    <br /><hr /><br />
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isActive)
+            </th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <a href="/Post/Details/@item.Id">@item.Title</a>
+            </td>
+            <td>
+                @item.DateCreated.Day/@item.DateCreated.Month/@item.DateCreated.Year
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isActive)
+            </td>
+        </tr>
+    }
+
+    </table>
+
+
+</div>
+
+

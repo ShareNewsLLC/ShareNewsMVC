@@ -1,0 +1,50 @@
+﻿@model MVC.Models.LoginModel
+
+@{
+    ViewBag.Title = "Admin Login";
+}
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+@using (Html.BeginForm()) 
+{
+    
+    <div class="form-horizontal container"  style="width: 500px;">
+        <br />
+        <h4>Admin Login</h4>
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <input type="checkbox" name="RememberMe" id="RememberMe" />
+        <label for="RememberMe">Remember me</label>
+        
+        <div class="g-recaptcha" data-sitekey="6LfEveMUAAAAAFL3iaHVXRdjThD7HAijM9B85OZj"></div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log in" class="btn btn-success" />
+            </div>
+        </div>
+
+        <br /><br />
+        <div>
+            <a href="/Auth/SignUp">Sign up</a> | 
+            <a href="/Auth/Login">Author Login</a>
+        </div>
+    </div>
+}

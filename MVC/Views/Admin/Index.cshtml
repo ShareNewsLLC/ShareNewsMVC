@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<DAL.Models.Post>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Admin panel";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link active" href="/Admin">Posts</a></li>
+        <li><a class="nav-link" href="/Admin/Authors">Authors</a></li>
+        <li><a class="nav-link" href="/Admin/Categories">Categories</a></li>
+        <li><a class="nav-link" href="/Admin/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+{
+    <div class="container">
+        <input type="text" autocomplete="off" placeholder="Search..." class="form-control" name="SearchString" value="@ViewBag.CurrentFilter" />
+        <br />
+    </div>
+}
+<table class="table table-striped container">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">@Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter=ViewBag.CurrentFilter })</th>
+            <th scope="col">Date created</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">@Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter=ViewBag.CurrentFilter })</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var post in Model)
+        {
+            <tr>
+                <th scope="row">@post.Id</th>
+                <td><a target="_blank" href="/Post/Details/@post.Id">@post.Title</a></td>
+                <td>@post.DateCreated.Day/@post.DateCreated.Month/@post.DateCreated.Year</td>
+                <td>@post.LastModified.Day/@post.LastModified.Month/@post.LastModified.Year</td>
+                <td class=" @(post.isActive ? "text-success" : "text-danger")">@(post.isActive ? "Active" : "Inactive")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<div class="container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<br />

@@ -1,0 +1,85 @@
+﻿@model DAL.Models.Author
+
+@{
+    ViewBag.Title = "Profile | Author";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Author">Active posts</a></li>
+        <li><a class="nav-link" href="/Author/InactivePosts">Inactive posts</a></li>
+        <li><a class="nav-link" href="/Post/Create">Create post</a></li>
+        <li><a class="nav-link active" href="/Author/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+
+<div class="container">
+    <center>
+        <div style="width: 80%">
+            <h3>@Model.FullName</h3>
+            <i class="subHeader">Email: <a href="mailto:@Model.Email">@Model.Email</a></i>
+            <i class="subHeader">Status: @(Model.isAnonymous ? "Anonymous" : "Public")</i>
+
+            @if (Model.isEmailConfirmed)
+            {
+                <i class="subHeader">Email: Confirmed!</i>
+            }
+            else
+            {
+                <i class="subHeader"><a href="/Author/ConfirmEmail">Please confirm your email</a></i>
+            }
+        
+            @if (Model.isVerified)
+            {
+                <i class="subHeader">Account: Verified!</i>
+            }
+            else
+            {
+                <i class="subHeader">Account: Waiting!</i>
+            }
+        
+            <i class="subHeader">
+                Date Joined: @Model.DateJoined.Day/@Model.DateJoined.Month/@Model.DateJoined.Year
+            </i>
+
+            <center>
+                <br />
+                @if (Model.isAnonymous)
+                {
+                    <button class="btn btn-warning" onclick="goPublic()">Go public</button>
+                }
+                else
+                {
+                    <button class="btn btn-warning" onclick="goAnonymous()">Go anonymous</button>
+                }
+                <br />
+                <br />
+                <img src="/Picture/Author/@Model.Id" alt="profile picture" style="width: 40%" />
+                <br /><br />
+                <a href="/Home/Author/@Model.Id" class="btn btn-secondary">Reader view</a>
+                <br /><br />
+                <a href="/Author/UpdateProfile" class="btn btn-secondary">Update profile</a>
+                <br /><br />
+                <a href="/Author/ChangePassword" class="btn btn-secondary">Change password</a>
+            </center>
+        </div>
+    </center>
+    <br /><br />
+</div>
+
+<script>
+    function goPublic() {
+        if (confirm("This makes you visible to everyone! Are you sure?")) {
+            window.location = '/Author/GoPublic';
+        }
+    }
+
+    function goAnonymous() {
+        if (confirm("This will hide your identity! Are you sure?")) {
+            window.location = '/Author/GoAnonymous';
+        }
+    }
+
+</script>

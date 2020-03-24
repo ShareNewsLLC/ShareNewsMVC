@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ShareNews</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script data-ad-client="ca-pub-8116383413068690" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+        <div class="navCont">
+            <a class="navbar-brand float-left" href="/">Share News</a>
+            <div class="searchCont">
+                <form action="/" method="get">
+                    <input type="text" name="SearchString" placeholder="Search..." class="form-control" autocomplete="off" value="@ViewBag.CurrentFilter" />
+                </form>
+                <a href="/author" title="Author portal"><i class="fa fa-user-o"></i></a>
+            </div>
+        </div>
+        
+        
+    </nav>
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <br /><br />
+    <hr />
+    <center>
+        <div class="container row">
+
+            <div class="footer col-lg-6 col-md-6 col-sm-12">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Author">Author page</a></li>
+                    <li><a href="/Admin">Admin page</a></li>
+                </ul>
+            </div>
+
+            <div class="footer col-lg-6 col-md-6 col-sm-12">
+                <ul>
+                    <li>Boring stuff:</li>
+                    <li><a href="mailto:safenewsman@gmail.com">safenewsman@gmail.com</a></li>
+                    <li><a href="/Home/TOC">Terms & conditions</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-12">
+                <br />
+                Copyright 2020 - ShareNews 
+            </div>
+
+        </div>
+    </center>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

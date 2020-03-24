@@ -1,0 +1,77 @@
+﻿@model PagedList.IPagedList<DAL.Models.Author>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Authors | Admin";
+}
+<br />
+<div class="container">
+    <ul class="nav-pills nav justify-content-center">
+        <li><a class="nav-link" href="/Admin">Posts</a></li>
+        <li><a class="nav-link active" href="/Admin/Authors">Authors</a></li>
+        <li><a class="nav-link" href="/Admin/Categories">Categories</a></li>
+        <li><a class="nav-link" href="/Admin/Profile">Profile</a></li>
+        <li><a class="nav-link" href="/Auth/Logout">Log out</a></li>
+    </ul>
+</div>
+<br />
+@using (Html.BeginForm("Authors", "Admin", FormMethod.Get))
+{
+    <div class="container">
+        <input type="text" autocomplete="off" placeholder="Search..." class="form-control" name="SearchString" value="@ViewBag.CurrentFilter" />
+        <br />
+    </div>
+}
+<table class="table table-striped container">
+    <tr>
+        <th scope="col">Id</th>
+        <th>E-mail</th>
+        <th>@Html.ActionLink("Full Name", "Authors", new { sortOrder = ViewBag.TitleSortParm, currentFilter=ViewBag.CurrentFilter })</th>
+        <th>Date Joined</th>
+        <th>@Html.ActionLink("Status", "Authors", new { sortOrder = ViewBag.StatusSortParm, currentFilter=ViewBag.CurrentFilter })</th>
+        <th>Verified</th>
+        <th>Email Confirmed</th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td  scope="row">@item.Id</td>
+        <td><a target="_blank" href="/Home/Author/@item.Id">@item.Email</a></td>
+        <td>@item.FullName</td>
+        <td>@item.DateJoined.Day/@item.DateJoined.Month/@item.DateJoined.Year</td>
+        <td>@(item.isAnonymous ? "Anonymous" : "Public")</td>
+        <td>@(item.isVerified ? "Yes" : "No")</td>
+        <td>@(item.isEmailConfirmed ? "Yes" : "No")</td>
+        <td>
+            @if(item.isVerified)
+            {
+                <button class="btn btn-danger" onclick="ban(@item.Id)">Ban</button>
+            }
+            else
+            {
+                <button class="btn btn-success" onclick="verify(@item.Id)">Verify</button>
+            }
+        </td>
+    </tr>
+}
+</table>
+<br />
+<div class="container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<br />
+
+<script>
+    function verify(id) {
+        if (confirm("This author will be able to post news to everyone! Are you sure to verify the author?")) {
+            window.location = '/Admin/VerifyAuthor/' + id;
+        }
+    }
+
+    function ban(id) {
+        if (confirm("This author will not be able to post news! Are you sure to ban the author?")) {
+            window.location = '/Admin/BanAuthor/' + id;
+        }
+    }
+</script>
