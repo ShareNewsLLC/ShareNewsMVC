@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -rf /var/www/MVC
+rm -f /etc/httpd/conf.d/mvc.conf
+rm -f /etc/systemd/system/mvc.service

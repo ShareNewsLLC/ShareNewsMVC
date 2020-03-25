@@ -1,0 +1,25 @@
+version: 0.0
+os: linux
+files:
+  - source: /MVC/
+    destination: /var/www/MVC
+  - source: scripts/mvc.conf
+    destination: /etc/httpd/conf.d/
+  - source: scripts/mvc.service
+    destination: /etc/systemd/system/
+
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_service
+      timeout: 300
+      runas: root
+
+  BeforeInstall:
+    - location: scripts/remove_application
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start_service
+      timeout: 300
+      runas: root

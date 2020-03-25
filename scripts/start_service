@@ -1,0 +1,4 @@
+#!/bin/bash
+service httpd start
+systemctl enable mvc.service
+systemctl start mvc.service
